@@ -6,9 +6,13 @@ from final_classe.characters.bestiary import (
     Behemoth,
     Bomb,
     Cactuar,
+    Chimera,
     Flan,
+    Garland,
     Golem,
+    Lich,
     Malboro,
+    RedDragon,
     Sephiroth,
     Tonberry,
     Wolf,
@@ -16,6 +20,8 @@ from final_classe.characters.bestiary import (
 from final_classe.characters.heroes import Hero
 from final_classe.characters.hit import Hit
 from final_classe.characters.jobs import (
+    JOBS,
+    JOBS_BY_NAME,
     Archer,
     BlackMage,
     Knight,
@@ -29,6 +35,8 @@ from final_classe.characters.monsters import Monster
 from final_classe.characters.party import Party
 
 __all__ = [
+    "JOBS",
+    "JOBS_BY_NAME",
     "Ahriman",
     "Archer",
     "Behemoth",
@@ -36,16 +44,20 @@ __all__ = [
     "Bomb",
     "Cactuar",
     "Character",
+    "Chimera",
     "Flan",
+    "Garland",
     "Golem",
     "Hero",
     "Hit",
     "Knight",
+    "Lich",
     "Malboro",
     "Monk",
     "Monster",
     "Ninja",
     "Party",
+    "RedDragon",
     "Samurai",
     "Sephiroth",
     "Soldier",

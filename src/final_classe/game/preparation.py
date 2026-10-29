@@ -18,7 +18,7 @@ def equip_from_bag(party: Party) -> None:
         console.print("[red]Le sac est vide.[/]")
         return
     for number, item in enumerate(party.bag, start=1):
-        console.print(f"  {number}. {item.name} ({item.slot.value}, {item.slots} emplacement(s))")
+        console.print(f"  {number}. {item}")
     item = party.bag.pop(ask_int("Quelle pièce : ", 1, len(party.bag)) - 1)
     hero = choose_hero(party)
     previous = hero.equip(item)

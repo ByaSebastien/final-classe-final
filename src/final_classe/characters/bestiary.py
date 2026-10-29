@@ -7,6 +7,7 @@ from typing import override
 from final_classe.characters.base import Character
 from final_classe.characters.hit import Hit
 from final_classe.characters.monsters import Monster
+from final_classe.items import Element
 
 
 class Flan(Monster):
@@ -36,16 +37,43 @@ class Wolf(Monster):
 
 
 class Sephiroth(Monster):
-    """Le souvenir de Nibelheim. Pour l'instant, hors d'atteinte."""
+    """Le souvenir de Nibelheim, et le boss du Cratère Nord.
+
+    Au prologue, le Cloud d'il y a cinq ans ne lui fait qu'un dégât par coup.
+    """
 
     NAME = "Sephiroth"
     HP = 30000
     MP = 999
-    STRENGTH = 50
-    MAGIC = 60
-    DEFENSE = 99
-    RESISTANCE = 99
+    STRENGTH = 60
+    MAGIC = 51
+    DEFENSE = 45
+    RESISTANCE = 40
     SPEED = 30
+    XP = 0
+
+    def __init__(self, name: str | None = None, **changes: int) -> None:
+        super().__init__(name, **changes)
+        self._turn = 0  # les tours joués dans le second souffle
+
+    @property
+    @override
+    def warning(self) -> str | None:
+        """Dans le second souffle, il annonce la Supernova."""
+        if self.hp_ratio < 0.5 and self._turn % 2 == 1:
+            return f"{self.name} déploie une aile noire…"
+        return None
+
+    @override
+    def act(self, heroes: Sequence[Character]) -> list[Hit]:
+        """Sous la moitié de ses PV, une Supernova un tour sur deux."""
+        if self.hp_ratio >= 0.5:
+            return super().act(heroes)
+        self._turn += 1
+        if self._turn % 2 == 1:
+            return super().act(heroes)
+        standing = [hero for hero in heroes if hero.is_alive]
+        return [Hit("Supernova", hero, self.magic_attack(hero, 14)) for hero in standing]
 
 
 class Bomb(Monster):
@@ -168,7 +196,7 @@ class Tonberry(Monster):
     SPEED = 3
     XP = 240
     GIL = 200
-    WEAKNESS = "feu"
+    WEAKNESS = Element.FIRE
 
 
 class Golem(Monster):
@@ -183,7 +211,7 @@ class Golem(Monster):
     SPEED = 5
     XP = 280
     GIL = 220
-    WEAKNESS = "foudre"
+    WEAKNESS = Element.THUNDER
 
 
 class Behemoth(Monster):
@@ -198,4 +226,76 @@ class Behemoth(Monster):
     SPEED = 12
     XP = 1200
     GIL = 1000
-    WEAKNESS = "glace"
+    WEAKNESS = Element.ICE
+
+
+class Chimera(Monster):
+    """La Chimère : trois têtes, et beaucoup de force."""
+
+    NAME = "Chimère"
+    HP = 4500
+    STRENGTH = 56
+    MAGIC = 26
+    DEFENSE = 34
+    RESISTANCE = 26
+    SPEED = 14
+    XP = 500
+    GIL = 450
+    WEAKNESS = Element.ICE
+
+
+class Lich(Monster):
+    """La Liche : un mort-vivant qui frappe à la magie."""
+
+    NAME = "Liche"
+    HP = 3900
+    STRENGTH = 17
+    MAGIC = 42
+    DEFENSE = 30
+    RESISTANCE = 40
+    SPEED = 11
+    XP = 500
+    GIL = 450
+    WEAKNESS = Element.FIRE
+
+    @override
+    def attack(self, target: Character) -> int:
+        """Son attaque est magique : la MAG contre la RÉS."""
+        return self.magic_attack(target, 12)
+
+
+class Garland(Monster):
+    """Garland, boss du Sanctuaire du Chaos. Aucune faiblesse."""
+
+    NAME = "Garland"
+    HP = 19500
+    STRENGTH = 63
+    MAGIC = 34
+    DEFENSE = 44
+    RESISTANCE = 36
+    SPEED = 13
+    XP = 2400
+    GIL = 3000
+
+
+class RedDragon(Monster):
+    """Le Dragon rouge : blessé, il crache du feu sur toute l'équipe."""
+
+    NAME = "Dragon rouge"
+    HP = 9000
+    STRENGTH = 66
+    MAGIC = 42
+    DEFENSE = 46
+    RESISTANCE = 30
+    SPEED = 15
+    XP = 1200
+    GIL = 1000
+    WEAKNESS = Element.ICE
+
+    @override
+    def act(self, heroes: Sequence[Character]) -> list[Hit]:
+        """Sous la moitié de ses PV, le Souffle de feu frappe toute l'équipe."""
+        if self.hp_ratio >= 0.5:
+            return super().act(heroes)
+        standing = [hero for hero in heroes if hero.is_alive]
+        return [Hit("Souffle de feu", hero, self.magic_attack(hero, 10)) for hero in standing]

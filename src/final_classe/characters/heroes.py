@@ -1,10 +1,10 @@
 """Hero : un héros a toujours un job, qui fixe ses PV, ses PM, sa VIT et sa compétence."""
 
 from abc import abstractmethod
-from typing import override
+from typing import Any, Self, override
 
 from final_classe.characters.base import Character
-from final_classe.items import Equipment, Materia, Slot, Usable
+from final_classe.items import Equipment, Materia, Slot, Target, Usable
 from final_classe.stats import Stats
 
 
@@ -17,7 +17,7 @@ class Hero(Character):
     JOB_NAME = "Héros"
     SKILL_NAME = "Compétence"
     SKILL_COST = 0
-    SKILL_TARGET = "ennemi"  # « ennemi », « allié », ou « ennemis » : tous les ennemis
+    SKILL_TARGET = Target.ENEMY
     SKILL_TEXT = "{user} utilise {skill} sur {target} : {value} dégâts."
     LEVEL_UP = Stats(strength=3, magic=3, defense=3, resistance=3)  # à chaque niveau
 
@@ -108,6 +108,34 @@ class Hero(Character):
             return 0
         self._mp -= materia.cost
         return sum(materia.cast(self, target) for target in targets)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Le héros en dictionnaire : son job, sa progression, sa base et son équipement."""
+        return {
+            "job": self.JOB_NAME,
+            "name": self.name,
+            "level": self.level,
+            "xp": self.xp,
+            "max_hp": self.max_hp,
+            "max_mp": self.max_mp,
+            "stats": self._base.to_dict(),  # la base seule : l'équipement est sauvé à part
+            "gear": [item.to_dict() for item in self.equipment],
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> Self:
+        """Recrée un héros : cls est le job appelé, Knight.from_dict crée un Knight."""
+        base = Stats.from_dict(data["stats"])
+        hero = cls(data["name"], base.strength, base.magic, base.defense, base.resistance)
+        hero._base = base
+        hero.level = data["level"]
+        hero.xp = data["xp"]
+        hero.max_hp = data["max_hp"]
+        hero.max_mp = data["max_mp"]
+        for item in data["gear"]:
+            hero.equip(Equipment.from_dict(item))
+        hero.rest()
+        return hero
 
     def start_turn(self) -> None:
         """Le début du tour du héros : il quitte sa garde."""

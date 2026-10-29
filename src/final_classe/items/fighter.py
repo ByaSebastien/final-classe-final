@@ -6,6 +6,8 @@ ces propriétés et ces méthodes convient, sans hériter de rien.
 
 from typing import Protocol
 
+from final_classe.items.kinds import Element
+
 
 class Fighter(Protocol):
     """Un combattant, vu par un objet ou une materia."""
@@ -15,7 +17,7 @@ class Fighter(Protocol):
         """La MAG."""
         ...
 
-    def magic_attack(self, target: Fighter, power: int, element: str | None = None) -> int:
+    def magic_attack(self, target: Fighter, power: int, element: Element | None = None) -> int:
         """Une attaque magique ; renvoie les PV perdus par la cible."""
         ...
 

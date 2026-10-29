@@ -9,3 +9,20 @@ class Slot(Enum):
     WEAPON = "arme"
     ARMOR = "armure"
     ACCESSORY = "accessoire"
+
+
+class Element(Enum):
+    """L'élément d'un sort, et la faiblesse d'un monstre."""
+
+    FIRE = "feu"
+    ICE = "glace"
+    THUNDER = "foudre"
+
+
+class Target(Enum):
+    """Qui vise une compétence, un sort ou un objet."""
+
+    ENEMY = "un ennemi"
+    ENEMIES = "tous les ennemis"
+    ALLY = "un allié"
+    KNOCKED_OUT = "un allié K.O."

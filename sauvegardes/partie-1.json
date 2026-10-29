@@ -1,0 +1,263 @@
+{
+  "version": 1,
+  "date": "2026-10-26 15:19",
+  "zone": 2,
+  "wave": 1,
+  "party": {
+    "heroes": [
+      {
+        "job": "Soldat",
+        "name": "Seb",
+        "level": 6,
+        "xp": 310,
+        "max_hp": 1200,
+        "max_mp": 100,
+        "stats": {
+          "strength": 45,
+          "magic": 25,
+          "defense": 25,
+          "resistance": 25,
+          "speed": 12
+        },
+        "gear": [
+          {
+            "name": "Épée de mythril",
+            "slot": "arme",
+            "price": 600,
+            "stats": {
+              "strength": 8,
+              "magic": 0,
+              "defense": 0,
+              "resistance": 0,
+              "speed": 0
+            },
+            "slots": 2,
+            "materias": [
+              {
+                "kind": "SummonMateria",
+                "name": "Ifrit",
+                "cost": 30,
+                "power": 20,
+                "element": "feu"
+              },
+              {
+                "kind": "AttackMateria",
+                "name": "Feu",
+                "cost": 8,
+                "power": 12,
+                "element": "feu"
+              }
+            ]
+          },
+          {
+            "name": "Armure de mythril",
+            "slot": "armure",
+            "price": 600,
+            "stats": {
+              "strength": 0,
+              "magic": 0,
+              "defense": 10,
+              "resistance": 6,
+              "speed": 0
+            },
+            "slots": 1,
+            "materias": [
+              {
+                "kind": "AttackMateria",
+                "name": "Glace",
+                "cost": 8,
+                "power": 12,
+                "element": "glace"
+              }
+            ]
+          },
+          {
+            "name": "Ruban",
+            "slot": "accessoire",
+            "price": 2000,
+            "stats": {
+              "strength": 0,
+              "magic": 0,
+              "defense": 0,
+              "resistance": 12,
+              "speed": 2
+            },
+            "slots": 0,
+            "materias": []
+          }
+        ]
+      },
+      {
+        "job": "Soldat",
+        "name": "Cloud",
+        "level": 6,
+        "xp": 310,
+        "max_hp": 1200,
+        "max_mp": 100,
+        "stats": {
+          "strength": 37,
+          "magic": 27,
+          "defense": 31,
+          "resistance": 25,
+          "speed": 12
+        },
+        "gear": [
+          {
+            "name": "Bâton de mythril",
+            "slot": "arme",
+            "price": 600,
+            "stats": {
+              "strength": 0,
+              "magic": 8,
+              "defense": 0,
+              "resistance": 0,
+              "speed": 0
+            },
+            "slots": 2,
+            "materias": [
+              {
+                "kind": "SummonMateria",
+                "name": "Ramuh",
+                "cost": 30,
+                "power": 20,
+                "element": "foudre"
+              },
+              {
+                "kind": "HealMateria",
+                "name": "Soin",
+                "cost": 10,
+                "power": 12
+              }
+            ]
+          },
+          {
+            "name": "Armure de cuir",
+            "slot": "armure",
+            "price": 100,
+            "stats": {
+              "strength": 0,
+              "magic": 0,
+              "defense": 4,
+              "resistance": 0,
+              "speed": 0
+            },
+            "slots": 0,
+            "materias": []
+          }
+        ]
+      },
+      {
+        "job": "Samouraï",
+        "name": "Auron",
+        "level": 6,
+        "xp": 310,
+        "max_hp": 1260,
+        "max_mp": 90,
+        "stats": {
+          "strength": 36,
+          "magic": 25,
+          "defense": 32,
+          "resistance": 27,
+          "speed": 9
+        },
+        "gear": [
+          {
+            "name": "Épée de bronze",
+            "slot": "arme",
+            "price": 100,
+            "stats": {
+              "strength": 4,
+              "magic": 0,
+              "defense": 0,
+              "resistance": 0,
+              "speed": 0
+            },
+            "slots": 0,
+            "materias": []
+          },
+          {
+            "name": "Armure de cuir",
+            "slot": "armure",
+            "price": 100,
+            "stats": {
+              "strength": 0,
+              "magic": 0,
+              "defense": 4,
+              "resistance": 0,
+              "speed": 0
+            },
+            "slots": 0,
+            "materias": []
+          }
+        ]
+      }
+    ],
+    "gil": 1460,
+    "bag": [
+      {
+        "name": "Épée de bronze",
+        "slot": "arme",
+        "price": 100,
+        "stats": {
+          "strength": 4,
+          "magic": 0,
+          "defense": 0,
+          "resistance": 0,
+          "speed": 0
+        },
+        "slots": 0,
+        "materias": []
+      },
+      {
+        "name": "Épée de bronze",
+        "slot": "arme",
+        "price": 100,
+        "stats": {
+          "strength": 4,
+          "magic": 0,
+          "defense": 0,
+          "resistance": 0,
+          "speed": 0
+        },
+        "slots": 0,
+        "materias": []
+      },
+      {
+        "name": "Armure de cuir",
+        "slot": "armure",
+        "price": 100,
+        "stats": {
+          "strength": 0,
+          "magic": 0,
+          "defense": 4,
+          "resistance": 0,
+          "speed": 0
+        },
+        "slots": 0,
+        "materias": []
+      }
+    ],
+    "materias": [
+      {
+        "kind": "AttackMateria",
+        "name": "Foudre",
+        "cost": 8,
+        "power": 12,
+        "element": "foudre"
+      },
+      {
+        "kind": "SummonMateria",
+        "name": "Shiva",
+        "cost": 30,
+        "power": 20,
+        "element": "glace"
+      }
+    ],
+    "items": {
+      "Potion": 3,
+      "Queue de phénix": 2,
+      "Éther": 2,
+      "Élixir": 1
+    }
+  }
+}

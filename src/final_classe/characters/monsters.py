@@ -6,6 +6,7 @@ from typing import override
 
 from final_classe.characters.base import Character
 from final_classe.characters.hit import Hit
+from final_classe.items import Element
 
 
 class Monster(Character):
@@ -21,7 +22,7 @@ class Monster(Character):
     SPEED = 10
     XP = 0
     GIL = 0
-    WEAKNESS: str | None = None  # l'élément qu'il craint
+    WEAKNESS: Element | None = None  # l'élément qu'il craint
 
     def __init__(self, name: str | None = None, **changes: int) -> None:
         stats = {
@@ -45,9 +46,9 @@ class Monster(Character):
         return "Monstre"
 
     @override
-    def damage_multiplier(self, element: str | None) -> int:
+    def damage_multiplier(self, element: Element | None) -> int:
         """Les dégâts doublent sur la faiblesse du monstre."""
-        return 2 if element is not None and element == self.WEAKNESS else 1
+        return 2 if element is not None and element is self.WEAKNESS else 1
 
     @property
     def warning(self) -> str | None:

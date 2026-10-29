@@ -3,6 +3,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import replace
 
+from final_classe.items import Element
 from final_classe.stats import Stats
 
 
@@ -102,12 +103,12 @@ class Character(ABC):
         """L'attaque physique : la FOR contre la DÉF de la cible."""
         return self.strike(target, self.strength * 10 - target.defense * 5)
 
-    def magic_attack(self, target: Character, power: int, element: str | None = None) -> int:
+    def magic_attack(self, target: Character, power: int, element: Element | None = None) -> int:
         """L'attaque magique : la MAG contre la RÉS de la cible, doublée sur sa faiblesse."""
         damage = self.magic * power - target.resistance * 5
         return self.strike(target, damage * target.damage_multiplier(element))
 
-    def damage_multiplier(self, element: str | None) -> int:
+    def damage_multiplier(self, element: Element | None) -> int:
         """Le multiplicateur des dégâts d'un élément ; aucune faiblesse par défaut."""
         return 1
 

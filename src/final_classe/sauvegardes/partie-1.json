@@ -1,0 +1,369 @@
+{
+  "version": 1,
+  "date": "2026-10-29 13:13",
+  "zone": 4,
+  "wave": 2,
+  "party": {
+    "heroes": [
+      {
+        "job": "Ninja",
+        "name": "Dante",
+        "level": 15,
+        "xp": 1390,
+        "max_hp": 1960,
+        "max_mp": 190,
+        "stats": {
+          "strength": 1041,
+          "magic": 1041,
+          "defense": 1041,
+          "resistance": 1041,
+          "speed": 18
+        },
+        "gear": [
+          {
+            "name": "Épée de cristal",
+            "slot": "arme",
+            "price": 4000,
+            "stats": {
+              "strength": 22,
+              "magic": 0,
+              "defense": 0,
+              "resistance": 0,
+              "speed": 0
+            },
+            "slots": 3,
+            "materias": [
+              {
+                "kind": "SummonMateria",
+                "name": "Bahamut",
+                "cost": 60,
+                "power": 30,
+                "element": null
+              },
+              {
+                "kind": "AttackMateria",
+                "name": "Glace",
+                "cost": 8,
+                "power": 12,
+                "element": "glace"
+              }
+            ]
+          },
+          {
+            "name": "Armure de diamant",
+            "slot": "armure",
+            "price": 1500,
+            "stats": {
+              "strength": 0,
+              "magic": 0,
+              "defense": 16,
+              "resistance": 10,
+              "speed": 0
+            },
+            "slots": 2,
+            "materias": [
+              {
+                "kind": "AttackMateria",
+                "name": "Foudre",
+                "cost": 8,
+                "power": 12,
+                "element": "foudre"
+              }
+            ]
+          },
+          {
+            "name": "Gantelets de force",
+            "slot": "accessoire",
+            "price": 1000,
+            "stats": {
+              "strength": 8,
+              "magic": 0,
+              "defense": 0,
+              "resistance": 0,
+              "speed": 0
+            },
+            "slots": 0,
+            "materias": []
+          }
+        ]
+      },
+      {
+        "job": "Mage noir",
+        "name": "Lulu",
+        "level": 15,
+        "xp": 1390,
+        "max_hp": 1920,
+        "max_mp": 230,
+        "stats": {
+          "strength": 52,
+          "magic": 64,
+          "defense": 54,
+          "resistance": 58,
+          "speed": 10
+        },
+        "gear": [
+          {
+            "name": "Poupée Mog",
+            "slot": "arme",
+            "price": 0,
+            "stats": {
+              "strength": 0,
+              "magic": 30,
+              "defense": 0,
+              "resistance": 0,
+              "speed": 0
+            },
+            "slots": 4,
+            "materias": []
+          },
+          {
+            "name": "Cotte de mailles",
+            "slot": "armure",
+            "price": 300,
+            "stats": {
+              "strength": 0,
+              "magic": 0,
+              "defense": 8,
+              "resistance": 2,
+              "speed": 0
+            },
+            "slots": 0,
+            "materias": []
+          },
+          {
+            "name": "Ruban",
+            "slot": "accessoire",
+            "price": 2000,
+            "stats": {
+              "strength": 0,
+              "magic": 0,
+              "defense": 0,
+              "resistance": 12,
+              "speed": 2
+            },
+            "slots": 0,
+            "materias": []
+          }
+        ]
+      },
+      {
+        "job": "Archer",
+        "name": "Fran",
+        "level": 15,
+        "xp": 1390,
+        "max_hp": 1980,
+        "max_mp": 190,
+        "stats": {
+          "strength": 60,
+          "magic": 56,
+          "defense": 54,
+          "resistance": 58,
+          "speed": 14
+        },
+        "gear": [
+          {
+            "name": "Arc Yoichi",
+            "slot": "arme",
+            "price": 0,
+            "stats": {
+              "strength": 28,
+              "magic": 0,
+              "defense": 0,
+              "resistance": 0,
+              "speed": 2
+            },
+            "slots": 3,
+            "materias": []
+          },
+          {
+            "name": "Armure de mythril",
+            "slot": "armure",
+            "price": 600,
+            "stats": {
+              "strength": 0,
+              "magic": 0,
+              "defense": 10,
+              "resistance": 6,
+              "speed": 0
+            },
+            "slots": 1,
+            "materias": [
+              {
+                "kind": "SummonMateria",
+                "name": "Ramuh",
+                "cost": 30,
+                "power": 20,
+                "element": "foudre"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "gil": 4220,
+    "bag": [
+      {
+        "name": "Épée de bronze",
+        "slot": "arme",
+        "price": 100,
+        "stats": {
+          "strength": 4,
+          "magic": 0,
+          "defense": 0,
+          "resistance": 0,
+          "speed": 0
+        },
+        "slots": 0,
+        "materias": []
+      },
+      {
+        "name": "Armure de cuir",
+        "slot": "armure",
+        "price": 100,
+        "stats": {
+          "strength": 0,
+          "magic": 0,
+          "defense": 4,
+          "resistance": 0,
+          "speed": 0
+        },
+        "slots": 0,
+        "materias": []
+      },
+      {
+        "name": "Bâton",
+        "slot": "arme",
+        "price": 100,
+        "stats": {
+          "strength": 0,
+          "magic": 4,
+          "defense": 0,
+          "resistance": 0,
+          "speed": 0
+        },
+        "slots": 0,
+        "materias": []
+      },
+      {
+        "name": "Armure de cuir",
+        "slot": "armure",
+        "price": 100,
+        "stats": {
+          "strength": 0,
+          "magic": 0,
+          "defense": 4,
+          "resistance": 0,
+          "speed": 0
+        },
+        "slots": 0,
+        "materias": []
+      },
+      {
+        "name": "Armure de cuir",
+        "slot": "armure",
+        "price": 100,
+        "stats": {
+          "strength": 0,
+          "magic": 0,
+          "defense": 4,
+          "resistance": 0,
+          "speed": 0
+        },
+        "slots": 0,
+        "materias": []
+      },
+      {
+        "name": "Épée de mythril",
+        "slot": "arme",
+        "price": 600,
+        "stats": {
+          "strength": 8,
+          "magic": 0,
+          "defense": 0,
+          "resistance": 0,
+          "speed": 0
+        },
+        "slots": 2,
+        "materias": [
+          {
+            "kind": "SummonMateria",
+            "name": "Ifrit",
+            "cost": 30,
+            "power": 20,
+            "element": "feu"
+          },
+          {
+            "kind": "AttackMateria",
+            "name": "Feu",
+            "cost": 8,
+            "power": 12,
+            "element": "feu"
+          }
+        ]
+      },
+      {
+        "name": "Bâton de mythril",
+        "slot": "arme",
+        "price": 600,
+        "stats": {
+          "strength": 0,
+          "magic": 8,
+          "defense": 0,
+          "resistance": 0,
+          "speed": 0
+        },
+        "slots": 2,
+        "materias": [
+          {
+            "kind": "SummonMateria",
+            "name": "Shiva",
+            "cost": 30,
+            "power": 20,
+            "element": "glace"
+          },
+          {
+            "kind": "HealMateria",
+            "name": "Soin",
+            "cost": 10,
+            "power": 12
+          }
+        ]
+      },
+      {
+        "name": "Épée de bronze",
+        "slot": "arme",
+        "price": 100,
+        "stats": {
+          "strength": 4,
+          "magic": 0,
+          "defense": 0,
+          "resistance": 0,
+          "speed": 0
+        },
+        "slots": 0,
+        "materias": []
+      },
+      {
+        "name": "Conformeur",
+        "slot": "arme",
+        "price": 0,
+        "stats": {
+          "strength": 24,
+          "magic": 0,
+          "defense": 0,
+          "resistance": 0,
+          "speed": 4
+        },
+        "slots": 3,
+        "materias": []
+      }
+    ],
+    "materias": [],
+    "items": {
+      "Potion": 3,
+      "Queue de phénix": 2,
+      "Éther": 2,
+      "Élixir": 1
+    }
+  }
+}

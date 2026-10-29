@@ -4,7 +4,7 @@ from typing import override
 
 from final_classe.characters.base import Character
 from final_classe.characters.heroes import Hero
-from final_classe.items import Potion
+from final_classe.items import Potion, Target
 
 
 class Soldier(Hero):
@@ -70,7 +70,7 @@ class Monk(Hero):
     JOB_NAME = "Moine"
     SKILL_NAME = "Chakra"
     SKILL_COST = 10
-    SKILL_TARGET = "allié"
+    SKILL_TARGET = Target.ALLY
     SKILL_TEXT = "{user} utilise Chakra sur {target} : +{value} PV."
 
     @override
@@ -142,10 +142,15 @@ class Ninja(Hero):
     JOB_NAME = "Ninja"
     SKILL_NAME = "Lancer"
     SKILL_COST = 8
-    SKILL_TARGET = "ennemis"
+    SKILL_TARGET = Target.ENEMIES
     SKILL_TEXT = "{user} lance ses shurikens sur {target} : {value} dégâts au total."
 
     @override
     def skill_effect(self, target: Character) -> int:
         """FOR × 8 − DÉF × 3, sur chaque ennemi."""
         return self.strike(target, self.strength * 8 - target.defense * 3)
+
+
+# Des classes, rangées dans une liste : la création les propose, la sauvegarde les retrouve.
+JOBS: list[type[Hero]] = [Soldier, BlackMage, Knight, Monk, Thief, Samurai, Archer, Ninja]
+JOBS_BY_NAME: dict[str, type[Hero]] = {job.JOB_NAME: job for job in JOBS}

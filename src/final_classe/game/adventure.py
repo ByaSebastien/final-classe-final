@@ -1,26 +1,12 @@
-"""Le déroulement de la partie."""
+"""Le déroulement de la partie : nouvelle partie ou reprise, puis les zones, dans l'ordre."""
 
-from final_classe.characters import (
-    Ahriman,
-    Behemoth,
-    Bomb,
-    Cactuar,
-    Flan,
-    Golem,
-    Malboro,
-    Monster,
-    Party,
-    Sephiroth,
-    Soldier,
-    Tonberry,
-    Wolf,
-)
+from final_classe.characters import Monster, Party, Sephiroth, Soldier
 from final_classe.game.battle import fight
-from final_classe.game.creation import ask_name, create_hero
+from final_classe.game.creation import ask_int, ask_name, create_hero
 from final_classe.game.display import banner, console, hero_sheet
-from final_classe.game.preparation import prepare
 from final_classe.game.recruit import recruit
-from final_classe.items import Elixir, Ether, PhoenixDown, catalog
+from final_classe.game.zones import ZONES
+from final_classe.storage import SLOTS, SaveError, load_game, peek, save_game
 
 
 def prologue() -> None:
@@ -52,69 +38,80 @@ def reward(party: Party, monsters: list[Monster]) -> None:
         console.print(f"[bold yellow]{hero.name} passe au niveau {hero.level} ![/]")
 
 
-def cross(zone: str, party: Party, waves: list[list[Monster]]) -> bool:
+def cross(index: int, party: Party, slot: int, first_wave: int = 0) -> bool:
     """Traverse une zone, vague après vague ; renvoie False si l'équipe tombe."""
-    console.print(f"\n[bold cyan]=== {zone} ===[/]")
-    for monsters in waves:
+    zone = ZONES[index]
+    console.print(f"\n[bold cyan]=== {zone.name} ===[/]")
+    waves = zone.waves()
+    for number in range(first_wave, len(waves)):
+        monsters = waves[number]
         if not fight(party, monsters):
             console.print("[bold red]=== Game over ===[/]")
             return False
         reward(party, monsters)
         party.rest()
         console.print("L'équipe se repose : PV et PM au maximum.")
-    console.print(f"\n[bold green]{zone} : traversée ![/]")
+        if number + 1 < len(waves):  # bonus ★★ 4 : on reprendra à la vague suivante
+            save_game(party, index, number + 1, slot)
+    console.print(f"\n[bold green]{zone.name} : traversée ![/]")
     return True
 
 
-def equip_starters(party: Party) -> None:
-    """Avant la Forêt : une arme et une armure pour chacun, selon sa meilleure statistique."""
-    for hero in party.heroes:
-        hero.equip(catalog.rod() if hero.magic > hero.strength else catalog.bronze_sword())
-        hero.equip(catalog.leather_armor())
-        console.print(hero_sheet(hero))
+def describe(slot: int) -> str:
+    """Bonus ★ 1 : le résumé d'une sauvegarde, ou la raison de son absence."""
+    try:
+        party, zone, _ = load_game(slot)
+        date = peek(slot)["date"]
+    except SaveError as error:
+        return f"[dim]{error}[/]"
+    heroes = ", ".join(f"{hero.name} niv. {hero.level}" for hero in party.heroes)
+    return f"{date}  {ZONES[zone].name}  ({heroes})"
 
 
-def open_chest(party: Party) -> None:
-    """À l'entrée de la Grotte, un coffre : de l'équipement, des materias et des objets."""
-    party.bag.extend([catalog.mythril_sword(), catalog.mythril_rod(), catalog.mythril_armor()])
-    party.bag.append(catalog.ribbon())
-    party.materias.extend([catalog.fire(), catalog.ice(), catalog.thunder(), catalog.cure()])
-    party.materias.extend([catalog.ifrit(), catalog.shiva(), catalog.ramuh()])
-    party.items.extend([Ether(), Ether(), PhoenixDown(), Elixir()])
-    console.print("\n[bold yellow]Un coffre ! Équipement, materias et objets rejoignent le sac.[/]")
+def choose_slot() -> int:
+    """Bonus ★ 2 : les emplacements, chacun avec son résumé."""
+    for slot in range(1, SLOTS + 1):
+        console.print(f"  {slot}. {describe(slot)}")
+    return ask_int("Emplacement : ", 1, SLOTS)
 
 
-def run() -> None:
-    """Le prologue, la création du héros, le recrutement, puis trois zones."""
-    console.print(banner())
+def new_game() -> Party:
+    """Le prologue, la création du héros et le recrutement."""
     prologue()
     console.print("\n[bold]Cinq ans plus tard…[/]")
     party = Party(recruit(create_hero(ask_name())))
     for hero in party.heroes:
         console.print(hero_sheet(hero))
-    plains: list[list[Monster]] = [
-        [Flan()],
-        [Wolf("Loup A"), Wolf("Loup B")],
-        [Flan(), Wolf("Loup alpha", hp=600, strength=20)],
-    ]
-    forest: list[list[Monster]] = [
-        [Bomb(), Ahriman()],
-        [Cactuar()],
-        [Bomb("Bombo A"), Bomb("Bombo B"), Ahriman()],
-        [Malboro()],
-    ]
-    if not cross("Les Plaines de Dalmasca", party, plains):
-        return
-    console.print("\nUn marchand ambulant vous offre de quoi vous équiper :")
-    equip_starters(party)
-    if not cross("La Forêt de Macalania", party, forest):
-        return
-    open_chest(party)
-    prepare(party)
-    cave: list[list[Monster]] = [
-        [Tonberry()],
-        [Golem(), Golem("Golem B")],
-        [Tonberry(), Golem()],
-        [Behemoth()],
-    ]
-    cross("La Grotte des cristaux", party, cave)
+    return party
+
+
+def start_game(slot: int) -> tuple[Party, int, int]:
+    """Nouvelle partie, ou reprise : l'équipe, la zone et la vague où commencer."""
+    console.print("1. Nouvelle partie  2. Continuer")
+    if ask_int("> ", 1, 2) == 2:
+        try:
+            party, zone, wave = load_game(slot)
+        except SaveError as error:
+            console.print(f"[red]{error}[/] Une nouvelle partie commence.")
+        else:
+            console.print(f"[green]Partie chargée : {ZONES[zone].name}.[/]")
+            return party, zone, wave
+    return new_game(), 0, 0
+
+
+def run() -> None:
+    """Le menu de départ, puis chaque zone, avec une sauvegarde après chacune."""
+    console.print(banner())
+    slot = choose_slot()  # bonus ★ 2
+    party, start, wave = start_game(slot)
+    for index in range(start, len(ZONES)):
+        zone = ZONES[index]
+        if zone.before is not None and wave == 0:  # au milieu d'une zone, c'est déjà fait
+            zone.before(party)
+        if not cross(index, party, slot, wave):
+            return
+        wave = 0
+        if index + 1 < len(ZONES):
+            save_game(party, index + 1, slot=slot)
+            console.print("[dim]Partie sauvegardée.[/]")
+    console.print("\n[bold cyan]Sephiroth est vaincu. Le monde est sauvé ![/]")

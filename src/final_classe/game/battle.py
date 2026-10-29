@@ -5,6 +5,7 @@ from collections.abc import Callable, Sequence
 from final_classe.characters import Character, Hero, Monster, Party
 from final_classe.game.creation import ask_int
 from final_classe.game.display import console, hero_line, monster_line
+from final_classe.items import Target
 
 
 def standing(characters: Sequence[Character]) -> list[Character]:
@@ -35,13 +36,13 @@ def choose_option(labels: list[str], prompt: str) -> int | None:
     return None if choice == 0 else choice - 1
 
 
-def targets_for(kind: str, party: Party, monsters: list[Monster]) -> list[Character]:
+def targets_for(kind: Target, party: Party, monsters: list[Monster]) -> list[Character]:
     """Les cibles d'une compétence, d'un sort ou d'un objet, d'après son genre de cible."""
-    if kind == "ennemis":
+    if kind is Target.ENEMIES:
         return standing(monsters)
-    if kind == "allié":
+    if kind is Target.ALLY:
         return [choose_target(party.standing, "Allié")]
-    if kind == "K.O.":
+    if kind is Target.KNOCKED_OUT:
         return [choose_target(party.knocked_out, "Allié K.O.")] if party.knocked_out else []
     return [choose_target(standing(monsters))]
 
@@ -93,7 +94,7 @@ def magic_action(hero: Hero, party: Party, monsters: list[Monster]) -> bool:
     targets = targets_for(materia.TARGET, party, monsters)
     value = hero.cast(materia, *targets)
     names = ", ".join(target.name for target in targets)
-    effect = f"+{value} PV" if materia.TARGET == "allié" else f"{value} dégâts"
+    effect = f"+{value} PV" if materia.TARGET is Target.ALLY else f"{value} dégâts"
     console.print(f"{hero.name} lance {materia.name} sur {names} : [bold]{effect}[/].")
     report_defeated(targets, monsters)
     return True
@@ -104,16 +105,20 @@ def item_action(hero: Hero, party: Party, monsters: list[Monster]) -> bool:
     if not party.items:
         console.print("[red]Plus aucun objet ![/]")
         return False
-    index = choose_option([item.name for item in party.items], "Objet")
+    counts = party.items.counts()  # {"Potion": 3, …} : une ligne par sorte d'objet
+    names = list(counts)
+    index = choose_option([f"{name} x{counts[name]}" for name in names], "Objet")
     if index is None:
         return False
-    item = party.items[index]
+    item = party.items.take(names[index])
+    if item is None:
+        return False
     targets = targets_for(item.TARGET, party, monsters)
     if not targets:
+        party.items.add(item)  # personne n'en a besoin : l'objet retourne dans le sac
         console.print("[red]Personne n'est K.O.[/]")
         return False
     value = item.use(targets[0])
-    party.items.remove(item)
     console.print(f"{hero.name} utilise {item.name} sur {targets[0].name} : [green]+{value}[/].")
     return True
 
